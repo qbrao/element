@@ -1,4 +1,6 @@
 <template>
+  <!-- autofocus html5属性，页面加载时自动获取焦点 -->
+  <!-- get class modifier 更好的写法 -->
   <button
     class="el-button"
     @click="handleClick"
@@ -19,6 +21,7 @@
   >
     <i class="el-icon-loading" v-if="loading"></i>
     <i :class="icon" v-if="icon && !loading"></i>
+    <!-- $slots.default 判断如果没有非具名插槽的节点，就不显示 -->
     <span v-if="$slots.default"><slot></slot></span>
   </button>
 </template>
@@ -26,6 +29,8 @@
   export default {
     name: 'ElButton',
 
+    // inject 允许父组件给子组件（不管多深）注入一个依赖。
+    // 需要跟 provide 结合使用
     inject: {
       elForm: {
         default: ''
@@ -62,6 +67,7 @@
         return (this.elFormItem || {}).elFormItemSize;
       },
       buttonSize() {
+        // TODO: this.$ELEMENT 这个的作用是什么？
         return this.size || this._elFormItemSize || (this.$ELEMENT || {}).size;
       },
       buttonDisabled() {
